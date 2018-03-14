@@ -1,7 +1,7 @@
 {
-  "name": "nextjstest",
+  "name": "next-js-setup",
   "version": "1.0.0",
-  "description": "nextjs test",
+  "description": "next-js-setup",
   "main": "app.js",
   "scripts": {
     "dev": "next",
@@ -11,7 +11,9 @@
   "author": "rcrawford",
   "license": "MIT",
   "dependencies": {
+    "@zeit/next-sass": "^0.1.1",
     "next": "^5.0.0",
+    "node-sass": "^4.7.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   }
