@@ -1,5 +1,6 @@
 import React from "react";
 import Head from "next/head";
+import Link from "next/link";
 import "../sass/styles.scss";
 
 export default class extends React.Component {
@@ -12,13 +13,13 @@ export default class extends React.Component {
         return (
             <React.Fragment>
                 <Head>
-                    <title>My page title</title>
+                    <title>Welcome</title>
                 </Head>
                 <div> {this.props.userAgent.substring(0, 40)} </div>
                 <img src="/static/rocket.png" width="50px" />
-                <div>
-                    <a href="list">List view</a>
-                </div>
+                <Link prefetch href="/list?q=test">
+                    <a>List view</a>
+                </Link>
             </React.Fragment>
         );
     }
