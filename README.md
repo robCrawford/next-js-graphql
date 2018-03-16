@@ -1,7 +1,10 @@
-# Next.js Setup
+# Next.js with GraphQL
 
 ```javascript
-npm install
-npm run dev
+npm install  
+cd gql-server  
+npm install  
+npm start  
+cd ../  
+npm run dev  
 ```
-
