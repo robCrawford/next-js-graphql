@@ -1,10 +1,12 @@
 # Next.js with GraphQL
 
-```javascript
-npm install  
-cd gql-server  
-npm install  
-npm start  
-cd ../  
+```
+cd path/to/repo
+npm i
 npm run dev  
+
+# New terminal
+cd path/to/repo/gql-server  
+npm i  
+npm start
 ```

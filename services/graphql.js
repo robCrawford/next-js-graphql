@@ -1,11 +1,12 @@
 import fetch from "isomorphic-unfetch";
+import compress from "graphql-query-compress";
 
 const httpHeaders = {
     "Content-type": "application/json"
 };
 
 export async function gqlQuery(q) {
-    return await post("http://localhost:3001/graphql", { query: q });
+    return await post("http://localhost:3001/graphql", { query: compress(q) });
 }
 
 async function post(url, req, cookies, headers) {
