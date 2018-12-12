@@ -6,7 +6,7 @@ const httpHeaders = {
 };
 
 export async function gqlQuery(q) {
-    return await post("http://localhost:3001/graphql", { query: compress(q) });
+    return await post("http://localhost:4000/graphql", { query: compress(q) });
 }
 
 async function post(url, req, cookies, headers) {

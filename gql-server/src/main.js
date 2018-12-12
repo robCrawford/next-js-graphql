@@ -1,26 +1,16 @@
-const { graphqlExpress } = require("apollo-server-express");
-const { schema, context } = require("./schema");
-const express = require("express");
-const bodyParser = require("body-parser");
+const express = require('express');
 const cors = require("cors");
+const { typeDefs, resolvers, context } = require("./schema");
+const { ApolloServer, gql } = require('apollo-server-express');
 
-const PORT = 3001;
+const PORT = 4000;
+
 const app = express();
-
 app.use(cors());
 
-app.use(
-    "/graphql",
-    bodyParser.json(),
-    graphqlExpress(req => ({
-        schema,
-        pretty: true,
-        graphiql: true,
-        tracing: true,
-        context: context(req)
-    }))
-);
+const server = new ApolloServer({ typeDefs, resolvers, context });
+server.applyMiddleware({ app });
 
-app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
-});
+app.listen({ port: PORT }, () =>
+  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+)
