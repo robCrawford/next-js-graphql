@@ -1,6 +1,10 @@
-$bg-colour: #eee;
+$bg-colour: #333;
 
 body {
     background: $bg-colour;
     font: 13px/20px sans-serif;
+
+    a {
+        color: #888;
+    }
 }
