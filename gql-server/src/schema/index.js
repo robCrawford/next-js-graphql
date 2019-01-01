@@ -1,6 +1,7 @@
-const axios = require("./axios");
 const DataLoader = require("dataloader");
-const movie = require("./types/movie");
+const axios = require("../services/axios");
+const movie = require("./movie");
+const { version } = require("../services/status");
 
 module.exports = {
     typeDefs: [
@@ -11,14 +12,12 @@ module.exports = {
         `,
         movie.type
     ],
-    resolvers: Object.assign(
-        {
-            Query: {
-                version: () => "1"
-            }
-        },
-        movie.resolvers
-    ),
+    resolvers: {
+        Query: Object.assign(
+            { version: () => version },
+            movie.resolvers.Query
+        )
+    },
     context: ({ req }) => ({
         loaders: {
             content: new DataLoader(
