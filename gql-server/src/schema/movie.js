@@ -1,10 +1,11 @@
-exports.type = `
+
+exports.typeDefs = `
   type Movie {
     id: ID!
     title: String!
     voteAverage: Float!
-    posterPath: String!
-    backdropPath: String!
+    poster: String!
+    backdrop: String!
     overview: String!
     tagline: String
     runtime: Int
@@ -19,30 +20,30 @@ exports.type = `
 
 exports.resolvers = {
     Movie: {
-        posterPath: root => {
-            return `https://image.tmdb.org/t/p/w500${root.posterPath}`;
+        poster: obj => {
+            return `https://image.tmdb.org/t/p/w500${obj.posterPath}`;
         },
-        backdropPath: root => {
-            return `https://image.tmdb.org/t/p/w1280${root.backdropPath}`;
+        backdrop: obj => {
+            return `https://image.tmdb.org/t/p/w1280${obj.backdropPath}`;
         }
     },
     Query: {
-        movies: (root, { page = 1 }, { loaders }) => {
-            return loaders.content
+        movies: (obj, { page = 1 }, { loaders }) => {
+            return loaders.fetch
                 .load([
                     "3/discover/movie",
-                    {
-                        params: {
-                            page
-                        }
-                    }
+                    { params: { page } }
                 ])
-                .then(res => res.data.results);
+                .then(res => {
+                    return res.data.results;
+                });
         },
-        movie: (root, { id }, { loaders }) => {
-            return loaders.content
+        movie: (obj, { id }, { loaders }) => {
+            return loaders.fetch
                 .load([`3/movie/${id}`])
-                .then(res => res.data);
+                .then(res => {
+                    return res.data;
+                });
         }
     }
 };

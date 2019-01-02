@@ -14,12 +14,8 @@ const instance = axios.create({
 
 instance.interceptors.request.use(config => {
     console.log(
-        "\x1b[32m",
-        config.method.toUpperCase(),
-        config.url,
-        "\x1b[33m \n",
-        _.omit(config.params, ["api_key", "include_adult", "include_video"]),
-        "\x1b[0m \n"
+        "\x1b[32m", config.method.toUpperCase(), config.url,
+        "\x1b[33m \n", config.params, "\x1b[0m \n"
     );
     return config;
 });

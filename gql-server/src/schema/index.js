@@ -1,32 +1,26 @@
-const DataLoader = require("dataloader");
-const axios = require("../services/axios");
-const movie = require("./movie");
+const merge = require('lodash/merge');
 const { version } = require("../services/status");
+const schemas = [require('./movie')];
 
-module.exports = {
-    typeDefs: [
-        `
+const rootSchema = {
+    typeDefs: [`
         type Query {
             version: String!
         }
-        `,
-        movie.type
-    ],
+    `],
     resolvers: {
-        Query: Object.assign(
-            { version: () => version },
-            movie.resolvers.Query
-        )
-    },
-    context: ({ req }) => ({
-        loaders: {
-            content: new DataLoader(
-                queries =>
-                    Promise.all(
-                        queries.map(([url, config]) => axios.get(url, config))
-                    ),
-                { cacheKeyFn: JSON.stringify }
-            )
+        Query: {
+            version: () => version
         }
-    })
+    }
 };
+
+module.exports = schemas.reduce(
+    (schema, { typeDefs, resolvers }) => {
+        return {
+            typeDefs: [...schema.typeDefs, typeDefs],
+            resolvers: merge(schema.resolvers, resolvers),
+        }
+    },
+    rootSchema
+);

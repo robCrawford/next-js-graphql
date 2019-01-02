@@ -5,16 +5,16 @@ import { gqlQuery } from "../services/graphql";
 import "../sass/styles.scss";
 
 type Props = {
-    movieTitle: string,
+    title: string,
+    poster: string,
     launched: boolean
 }
 
 const movieQuery = `
     query {
-        movie(id: 280054) {
-            __typename
-            id
+        movie(id: 11) {
             title
+            poster
         }
     }
 `;
@@ -26,7 +26,8 @@ export default class Launch extends React.Component<Props> {
         const movie = res && res.data && res.data.movie;
 
         return {
-            movieTitle: movie && movie.title || "-",
+            title: movie && movie.title,
+            poster: movie && movie.poster,
             launched: Boolean(movie)
         }
     }
@@ -38,7 +39,8 @@ export default class Launch extends React.Component<Props> {
                     <title> Launch </title>
                 </Head>
 
-                <h3> Movie: { this.props.movieTitle } </h3>
+                <h3> { this.props.title } </h3>
+                <img src={ this.props.poster } width="40" />
                 <Rocket launched={ this.props.launched } />
             </div>
         )
