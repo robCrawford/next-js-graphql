@@ -6,10 +6,16 @@ const axios = require("./services/axios");
 const { ApolloServer, gql } = require('apollo-server-express');
 const { typeDefs, resolvers } = require("./schema");
 const { version, hostname, serviceName } = require("./services/status");
+const { NODE_ENV, PROXY_ADDRESS } = process.env;
 
-/*
-  Apollo Server
-*/
+
+// Debug proxy
+if (PROXY_ADDRESS && NODE_ENV === 'development') {
+    process.env.http_proxy = process.env.https_proxy = `http://${PROXY_ADDRESS}`;
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+}
+
+// Apollo Server
 const context = ({ req }) => ({
     loaders: {
         fetch: new DataLoader(
@@ -26,9 +32,7 @@ const context = ({ req }) => ({
 
 const server = new ApolloServer({ typeDefs, resolvers, context });
 
-/*
-  Express
-*/
+// Express
 const PORT = 4000;
 const app = express();
 
