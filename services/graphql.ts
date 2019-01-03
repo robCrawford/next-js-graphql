@@ -1,7 +1,6 @@
 import fetch from "isomorphic-unfetch";
 import compress from "graphql-query-compress";
 
-
 export async function gqlQuery(query: string) {
     return await post(
         "http://localhost:4000/graphql",
@@ -15,7 +14,7 @@ async function post(
     headers?: object,
     cookieRelay?: string
 ) {
-    const res = await fetch(url, {
+    const params = {
         method: "POST",
         headers: {
             "Content-type": "application/json",
@@ -24,7 +23,14 @@ async function post(
         },
         body: JSON.stringify(requestParams),
         credentials: "same-origin" as "same-origin"
-    });
+    };
+
+    const res = await fetch(
+        url,
+        global.httpsProxyAgent
+            ? { ...params, agent: global.httpsProxyAgent }
+            : params
+    );
 
     if (res.status === 204) {
         return Promise.resolve(null);

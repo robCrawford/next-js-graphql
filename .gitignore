@@ -8,3 +8,4 @@ pids
 coverage
 test/**/out
 .DS_Store
+.env
