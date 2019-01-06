@@ -19,9 +19,9 @@ export default class Error extends React.Component<Props> {
                 <Head>
                     <title> Error </title>
                 </Head>
-
                 <h3> Error </h3>
-                { this.props.stack }
+                <p> An unexpected error occurred </p>
+                <p> { this.props.stack } </p>
             </div>
         );
     }

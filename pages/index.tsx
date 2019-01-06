@@ -25,7 +25,6 @@ export default class extends React.Component<Props> {
                 <Head>
                     <title> Welcome </title>
                 </Head>
-
                 <h3> { this.props.userAgent } </h3>
                 <Rocket launched={ false } />
                 <Link href="/launch">
